@@ -26,7 +26,7 @@ class Head_Detector_Trainer(nn.Module):
         self.rpn_sigma = opt.rpn_sigma
         self.anchor_target_creator = AnchorTargetCreator()
         self.optimizer = self.head_detector.get_optimizer()
-        self.vis = Visualizer(env=opt.env)
+        # self.vis = Visualizer(env=opt.env)
         self.rpn_cm = ConfusionMeter(2)
         self.meters = {k: AverageValueMeter() for k in LossTuple._fields}  # average loss
 
@@ -74,7 +74,7 @@ class Head_Detector_Trainer(nn.Module):
         save_dict['model'] = self.head_detector.state_dict()
         save_dict['config'] = opt._state_dict()
         save_dict['other_info'] = kwargs
-        save_dict['vis_info'] = self.vis.state_dict()
+        #save_dict['vis_info'] = self.vis.state_dict()
 
         if save_optimizer:
             save_dict['optimizer'] = self.optimizer.state_dict()
@@ -86,7 +86,7 @@ class Head_Detector_Trainer(nn.Module):
                 save_path += '_%s' % v_
 
         t.save(save_dict, save_path)
-        self.vis.save([self.vis.env])
+        #self.vis.save([self.vis.env])
         return save_path
 
     def load(self, path, load_optimizer=True, parse_opt=False, ):
